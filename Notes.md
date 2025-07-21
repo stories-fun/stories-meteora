@@ -1,0 +1,21 @@
+# Config Creation
+
+Public key :  CvBMs2LEp8KbfCvPNMawR5cFyQ1k9ac7xrtCoxu1Y2gH
+Created config: 86zWfPkbuswsD1vsbLwgMNNV1UxByNcNwypQxWRM4XEA
+transaction created successfully
+signing the transaction
+sending and confirming the transaction
+Config created successfully!
+Transaction: https://solscan.io/tx/3sHsz7xgTtL6rVk5XB26mHDVTRee1f1keDtDUBX75VGg1PrbDL2um9jajUEVMfHmNi7LfnS421kK3PNzshp5ZAAS
+Config address: 86zWfPkbuswsD1vsbLwgMNNV1UxByNcNwypQxWRM4XEA
+
+
+# POOL Creation
+Using config: 86zWfPkbuswsD1vsbLwgMNNV1UxByNcNwypQxWRM4XEA
+Generated base mint: BY3zXEfCXziB6KJ921Qo6G4fSSAqDYSuYTDeA1o7Vp4M
+Creating pool transaction...
+Transaction confirmed!
+Pool created: https://solscan.io/tx/pxg3srJUqnPikSUj7aTNmQnoaJksNQ1YmZZX4jtHJGNFwgDJFyjxSeDXyYqYTcgC3Eh3ytbt3bY3wXX7oZfMLFw?cluster=devnet
+
+
+7DwoKsh5G7vQm5yf7pUwtC3jrky4q6FUMexKiRonceTY
