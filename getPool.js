@@ -1,64 +1,52 @@
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID, createMint } from "@solana/spl-token";
-import { DynamicBondingCurveClient } from "@meteora-ag/dynamic-bonding-curve-sdk";
+import { getAccount, getAssociatedTokenAddressSync } from "@solana/spl-token";
+import {
+  DynamicBondingCurveClient,
+  deriveDbcPoolAddress,
+} from "@meteora-ag/dynamic-bonding-curve-sdk";
 import dotenv from "dotenv";
+// import { BN } from "bn.js";
 dotenv.config();
 
-function getClusterUrl(cluster) {
-  switch (cluster) {
-    case "DEVNET":
-      return "https://api.devnet.solana.com";
-    case "TESTNET":
-      return "https://api.testnet.solana.com";
-    case "LOCALNET":
-      return "http://127.0.0.1:8899";
-    case "CUSTOM":
-      return process.env.CUSTOM_RPC;
-    default:
-      throw new Error("Invalid cluster");
-  }
-}
-
 // Get Pool Address and It's Progress
-async function getConfig() {
-  console.log("Getting Pool Configuration......");
-
-  const CLUSTER = process.env.CLUSTER || "DEVNET";
-  console.log("CLUSTER: ", CLUSTER);
+async function getPoolProgression() {
+  //https://mainnet.helius-rpc.com/79fb27ad-f384-4edd-8eb0-4524558c5392
   const connection = new Connection(
-    getClusterUrl(CLUSTER.toUpperCase()),
+    "https://mainnet.helius-rpc.com/?api-key=d16a79e0-06cb-409f-a8d1-f4d7efa257de",
     "confirmed"
   );
 
   const client = new DynamicBondingCurveClient(connection, "confirmed");
 
   // Using the same config address as in createPool.js
-  const configAddress = new PublicKey(
-    "4WnDksycxFGundsqAnQ22VLnGwxuBDiyzWN63M1GzwwH"
-  );
 
   try {
-    // Get Pool Config State
-    // const config = await client.state.getPoolConfig(configAddress);
-
-    // console.log("Pool Configuration:", config);
 
     // Get Pool Address and It's Progress
-    const pools = await client.state.getPoolsByConfig(configAddress);
-    // console.log("The pools :", pools[0]);
+    console.log("Getting Pool Address and It's Progress......");
 
-    const poolAddress = pools[0].publicKey;
+    const poolAddress = new PublicKey(
+      "EFUG4v6wDhKb47D4SkH9oTXeUfoG8bLbq2VjqDfXrk1t"
+    );
     console.log("Pool Address", poolAddress.toBase58());
 
     const progress = await client.state.getPoolCurveProgress(poolAddress);
-    console.log("The Progress :", progress);
+
+    console.log("The Progress rate :", progress);
+
+    // Convert decimal to percentage (0-1 becomes 0%-100%)
+    const progressInPercent = progress * 100;
+    console.log(
+      "The Progress rate in percent :",
+      progressInPercent.toFixed(4) + "%"
+    );
   } catch (error) {
     console.error("Failed to get pool configuration:", error);
     throw error;
   }
 }
 
-getConfig()
+getPoolProgression()
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error);
