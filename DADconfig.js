@@ -35,12 +35,13 @@ async function setupConfig() {
 
     // 1. Build the curve configuration (off-chain math)
     const curveConfig = buildCurve({
-      totalTokenSupply: 1000000000, //Total supply of base token
-      percentageSupplyOnMigration: 10,
-      migrationQuoteThreshold: 20, 
-      migrationOption: 1,
-      tokenBaseDecimal: 9,
-      tokenQuoteDecimal: 9,
+      totalTokenSupply: 1000000000, // 1B Meme token generation
+      percentageSupplyOnMigration: 
+      20, ///
+      migrationQuoteThreshold: 210,
+      migrationOption: 1, // Option 1: DAMM V2
+      tokenBaseDecimal: 9, // 9 DECIMALS FOR MEME COIN
+      tokenQuoteDecimal: 9, // 9 DECIMALS FOR STORIES COIN
       lockedVestingParam: {
         totalLockedVestingAmount: 0,
         numberOfVestingPeriod: 0,
@@ -59,27 +60,29 @@ async function setupConfig() {
       },
       dynamicFeeEnabled: true,
       activationType: 0,
-      collectFeeMode: 0,
-      migrationFeeOption: 5,
-      tokenType: 1,
+      collectFeeMode: 0, // 0: Quote Token
+      migrationFeeOption: 3, // 3: Fixed 200bps,
+      tokenType: 1, // Token2022
       partnerLpPercentage: 0,
       creatorLpPercentage: 0,
-      partnerLockedLpPercentage: 100,
-      creatorLockedLpPercentage: 0,
-      creatorTradingFeePercentage: 0,
-      leftover: 10000,
+      partnerLockedLpPercentage: 50,
+      creatorLockedLpPercentage: 50,
+      creatorTradingFeePercentage: 2,
+      leftover: 1,
       tokenUpdateAuthority: 1,
       migrationFee: {
-        feePercentage: 0,
+        feePercentage: 3,
         creatorFeePercentage: 0,
       },
     });
 
     const configSetup = await client.partner.createConfig({
       config: config.publicKey,
-      feeClaimer: wallet.publicKey, //adi's address
-      leftoverReceiver: wallet.publicKey, //adi's address
-      payer: wallet.publicKey, // token creator
+      feeClaimer: new PublicKey("29w2WBd6wE7rsBNN3XKHV6imPN7UBnYUHsSvNb9X7FU2"), // Launchpad Address , Stories . fun address
+      leftoverReceiver: new PublicKey(
+        "29w2WBd6wE7rsBNN3XKHV6imPN7UBnYUHsSvNb9X7FU2"
+      ), //  Stories.fun
+      payer: wallet.publicKey, // ADHI or Bryce
       quoteMint: new PublicKey("So11111111111111111111111111111111111111112"),
       ...curveConfig,
     });

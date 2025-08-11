@@ -35,8 +35,8 @@ async function createPool() {
       name: "DIP_POOL",
       symbol: "DIP",
       uri: "https://raw.githubusercontent.com/soumalya340/Raw_Data/refs/heads/main/raw_uri",
-      payer: wallet.publicKey,
-      poolCreator: wallet.publicKey,
+      payer: wallet.publicKey, // token creator wallet address
+      poolCreator: wallet.publicKey, // token creator wallet address
     };
 
     const client = new DynamicBondingCurveClient(connection, "confirmed");
